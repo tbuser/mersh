@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+
+require "mersh"
+require "optparse"
+
+file = ARGV.pop
+
+options = {}
+
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: mersh [options] [file]"
+
+  options[:info] = false
+  opts.on('-i', '--info', 'Display model info') do |i|
+    options[:info] = i
+  end
+
+  options[:json] = false
+  opts.on('-j', '--json [TYPE]', 'Output json representation, TYPE can be either threejs or plain') do |j|
+    options[:json] = j
+  end
+  
+  opts.on_tail('-h', '--help', 'Display this screen') do
+    puts opts
+    exit
+  end
+end
+
+optparse.parse!
+
+raise OptionParser::MissingArgument, "You must specify a filename" if file.nil?
+
+begin
+  model = Mersh.new(file)
+
+  case true
+  when options[:info]
+    puts model.info
+  when options[:json] != false
+    puts model.to_json(options[:json])
+  else
+    puts optparse
+  end
+rescue Exception => e
+  puts "ERROR: #{e.message}"
+  exit(-1)
+end

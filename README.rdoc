@@ -1,0 +1,19 @@
+A collection of tools for getting info and manipulating 3D models. (currently only STL files)
+
+=Ruby gem usage
+
+  require "mersh"
+
+  model = Mersh.new('awesome.stl')
+
+  puts model.info
+  puts model.to_json('threejs')
+
+=Command line
+
+Also installs a mersh binary that can be called on the command line.
+
+  Usage: mersh [options] [file]
+      -i, --info                       Display model info
+      -j, --json TYPE                  Output json representation, TYPE can be either threejs or plain
+      -h, --help                       Display this screen
