@@ -21,7 +21,7 @@ require 'json'
 require 'digest/md5'
 
 class Mersh
-  VERSION = "0.0.1"
+  VERSION = "0.0.2"
   attr_accessor :vertices, :faces, :normals
   
   def initialize(file)
@@ -102,12 +102,12 @@ class Mersh
 
     stl_data = @file.read
     
-    stl_data.gsub!(/^\s*solid.*$/, '')
-    stl_data.gsub!(/^\s*facet normal /, '').gsub!(/^\s*outer loop.*$/, '')
-    stl_data.gsub!(/^\s*vertex /, '')
-    stl_data.gsub!(/^\s*endloop.*$/, '').gsub!(/^\s*endfacet.*$/, '')
-    stl_data.gsub!(/^\s*endsolid.*$/, '')
-    stl_data.gsub!(/^\s*$\n/, '')
+    stl_data.gsub!(/^\s*solid.*$/i, '')
+    stl_data.gsub!(/^\s*facet normal /i, '').gsub!(/^\s*outer loop.*$/i, '')
+    stl_data.gsub!(/^\s*vertex /i, '')
+    stl_data.gsub!(/^\s*endloop.*$/i, '').gsub!(/^\s*endfacet.*$/i, '')
+    stl_data.gsub!(/^\s*endsolid.*$/i, '')
+    stl_data.gsub!(/^\s*$\n/i, '')
     
     stl_data.split("\n").each do |line|
       line_pos = 1 if line_pos > 4

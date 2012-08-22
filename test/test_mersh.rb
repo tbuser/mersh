@@ -8,6 +8,7 @@ class MershTest < Test::Unit::TestCase
     @binary_stl = @current_dir + "/box_binary.stl"
     @threejs_json = @current_dir + "/box_threejs.json"
     @plain_json = @current_dir + "/box_plain.json"
+    @capitalized_ascii_stl = @current_dir + "/capitalized_ascii.stl"
   end
   
   def test_ascii_stl
@@ -47,5 +48,11 @@ class MershTest < Test::Unit::TestCase
     assert_equal 8, box.vertices.size
     assert_equal 12, box.faces.size
     assert_equal 12, box.normals.size
+  end
+  
+  def test_capitalized_ascii_stl
+    stl = Mersh.new(@capitalized_ascii_stl)
+    
+    assert stl.vertices.size > 0
   end
 end
