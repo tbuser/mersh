@@ -1,10 +1,8 @@
-require_relative "../lib/mersh"
-
 Gem::Specification.new do |s|
   s.name              = 'mersh'
   s.rubyforge_project = "mersh"
 
-  s.version           = Mersh::VERSION
+  s.version           = "0.0.3"
   s.platform          = Gem::Platform::RUBY
 
   s.summary           = "3D Mesh Manipulation"
