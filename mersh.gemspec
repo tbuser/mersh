@@ -17,5 +17,5 @@ Gem::Specification.new do |s|
   s.files             = Dir["{lib}/**/*.rb", "bin/*", "test/*", "LICENSE", "README.rdoc"]
   s.executables       = ['mersh']
   
-  s.add_dependency("json")
+  # s.add_dependency("json")
 end
