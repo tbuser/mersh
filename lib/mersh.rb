@@ -21,7 +21,7 @@ require 'json'
 require 'digest/md5'
 
 class Mersh
-  VERSION = "0.0.2"
+  VERSION = "0.0.3"
   attr_accessor :vertices, :faces, :normals
   
   def initialize(file)
@@ -82,10 +82,17 @@ class Mersh
   private
   
   def parse
-    if @file.readline =~ /^solid/i
-      parse_ascii_stl
-    else
+    # some binary stls begin with the word solid, so can't rely on that
+    # instead, try to read the face count as if it was a binary stl and see if it matches the file size
+    @file.rewind
+    @file.seek 80, IO::SEEK_CUR
+    face_count = @file.read(4).unpack("I")[0]
+    predicted_size = 80 + 4 + 50 * face_count
+
+    if File.size(@file.path) == predicted_size
       parse_binary_stl
+    else
+      parse_ascii_stl
     end
   end
   
@@ -95,11 +102,12 @@ class Mersh
     @normals  = []
 
     face_count   = 0
-    vertex_count  = 0
+    vertex_count = 0
     vertex_index = {}
 
-    line_pos      = 1
+    line_pos     = 1
 
+    @file.rewind
     stl_data = @file.read
     
     stl_data.gsub!(/^\s*solid.*$/i, '')

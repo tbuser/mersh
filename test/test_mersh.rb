@@ -15,7 +15,7 @@ class MershTest < Test::Unit::TestCase
     box = Mersh.new(@ascii_stl)
     box_plain_json = box.to_json
     box_threejs_json = box.to_json('threejs')
-    
+
     assert_equal String, box_threejs_json.class
     assert_equal JSON.parse(File.open(@threejs_json).read), JSON.parse(box_threejs_json)
 
@@ -27,7 +27,7 @@ class MershTest < Test::Unit::TestCase
     box = Mersh.new(@binary_stl)
     box_plain_json = box.to_json
     box_threejs_json = box.to_json('threejs')
-  
+
     assert_equal String, box_threejs_json.class
     assert_equal JSON.parse(File.open(@threejs_json).read), JSON.parse(box_threejs_json)
 
@@ -52,6 +52,12 @@ class MershTest < Test::Unit::TestCase
   
   def test_capitalized_ascii_stl
     stl = Mersh.new(@capitalized_ascii_stl)
+    
+    assert stl.vertices.size > 0
+  end
+  
+  def test_solid_header_binary
+    stl = Mersh.new(@current_dir + "/binary_solid_header.stl")
     
     assert stl.vertices.size > 0
   end
