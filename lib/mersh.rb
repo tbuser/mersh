@@ -38,7 +38,7 @@ class Mersh
   end
   
   def open(path)
-    @file = File.open(path)
+    @file = File.open(path, 'rb')
     parse
   end
 
